@@ -1,0 +1,32 @@
+<plugin
+    id="org.ow2.mind.compilation.mwcc"
+    name="">
+
+	<!-- Extension that add a '<minus-minus>mwcc' command-line option to mindc -->    
+    <extension
+        point="org.ow2.mind.mindc.command-line-options">
+
+        <cmdFlag
+            id="org.ow2.mind.compilation.mwcc.MWCC"
+            longName="mwcc"
+            description="Use a MWCC compatible compilation suite" />
+   </extension>
+
+	<!-- Google Guice module extension that extends the CommonBackendModule and
+         replace the implementation of CompilerWrapper by the MWCCCompilerModule
+         class.
+         This extension is enabled only if the '<minus-minus>mwcc' flag is present on the 
+         command line. -->
+    <extension
+        point="org.ow2.mind.plugin.guice-module">
+        <module
+            class="org.ow2.mind.compilation.mwcc.MWCCCompilerModule">
+            <override
+                class="org.ow2.mind.CommonBackendModule" />
+            <enableWhen>
+                <cmdOption
+                    id="org.ow2.mind.compilation.mwcc.MWCC" />
+            </enableWhen>
+        </module>
+    </extension>
+</plugin>
